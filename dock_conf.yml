@@ -33,12 +33,18 @@
     service:
             name: firewalld
             state: stopped
+         
+  - copy: 
+            content: "This is hi from container web!"
+            dest: "/var/www/html/index.html"
 
   - name: Running docker container
     docker_container:
             name: web
             image: httpd
             state: started
+            volumes:
+                    - /var/www/html:/usr/local/apache2/htdocs/
             exposed_ports:
                     - "80"
             ports:
